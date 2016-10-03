@@ -15,5 +15,6 @@ namespace DotRaces.Models
         public int QuestionID { get; set; }
         public bool? AnswerFlag { get; set; }
         public int? AnswerValue { get; set; }
+        public int? QuestionRoundNum { get; set; }
     }
 }

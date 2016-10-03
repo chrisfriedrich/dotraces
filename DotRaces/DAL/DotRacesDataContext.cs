@@ -16,9 +16,9 @@ namespace DotRaces.DAL
         }
 
         public DbSet<Answer> Answers { get; set; }
-        public DbSet<SettingSet> SettingSets { get; set; }
-        public DbSet<Survey> Surveys { get; set; }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Race> Races { get; set; }
+        public DbSet<SettingSet> SettingSets { get; set; }
+        public DbSet<Survey> Surveys { get; set; }
     }
 }

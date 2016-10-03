@@ -11,8 +11,10 @@ namespace DotRaces.Models
     public class Race
     {
         public int RaceID { get; set; }
+        public int RaceNum { get; set; }
         public int Duration { get; set; }
         public bool Winner { get; set; }
+        public int SettingSetID { get; set; }
 
         public double Difference1 { get; set; }
         public double Difference2 { get; set; }

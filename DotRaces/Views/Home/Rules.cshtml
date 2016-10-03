@@ -1,0 +1,78 @@
+﻿@model DotRaces.Models.Survey
+@{
+    ViewBag.Title = "Rules";
+}
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            $(":submit").addClass("btn-success");
+        }, 5990);
+
+        setTimeout(function () {
+            $(':submit').prop('disabled', false);
+        }, 6000);
+    });
+</script>
+@using (Html.BeginForm("Rules", "Home"))
+{
+    @Html.HiddenFor(x => x.SurveyID)
+    @Html.HiddenFor(x => x.CreatedDate)
+    @Html.HiddenFor(x => x.SettingsID)
+
+      <table>
+          <tr>
+              <th class="text-center">
+                  <h2>RULES OF THE GAME</h2>
+              </th>
+          </tr>
+          <tr>
+              <td>
+                  <p class="lead">
+                      <br />
+                      Each of the seven races you see will feature two icons.&nbsp;&nbsp;
+                      One icon represents the University of Oregon Ducks and the other represents the Oregon State University Beavers.
+                  </p>
+                  <p class="lead">
+                      Every time your school’s icon wins, you will receive 5 points.&nbsp;&nbsp;
+                      When the opponent wins, you receive 0 points.
+                  </p>
+                  <p class="lead">
+                      Prior to the final race, you will be asked if you’d like to take a bet.&nbsp;&nbsp;
+                      If your icon wins, you will receive double your point total.&nbsp;&nbsp;
+                      If your icon loses, you will lose all your points.
+                  </p>
+                  <p class="lead">
+                      So, assume you have 10 points before the seventh and final race.&nbsp;&nbsp;
+                      You decide <strong>“Yes, I want to take the bet.”</strong>&nbsp;
+                      If your icon wins, you will have 20 points total after all the races are over.&nbsp;&nbsp;
+                      If your icon loses, you will have 0 points.
+                  </p>
+                  <p class="lead">
+                      Now, assume you have 10 points before the last race and you say <strong>“No, I don’t want to take the bet.”</strong>&nbsp;
+                      This means you will receive 0 points for the last race (win or lose), but you will keep the 10 points you already had.&nbsp;&nbsp;
+                      So, your point total after all the final race is still 10.
+                  </p>
+                  <p class="lead">
+                      At the completion of the study, the total number of points you have after the final race will then be placed in a pot for a drawing with all the other study participants.&nbsp;&nbsp;
+                      We will then randomly select two lucky winners to be awarded a grand prize of a $35 gift certificate to Amazon.com.
+                  </p>
+                  <p class="lead">
+                      Your odds of winning are based on your percentage of points in the pot after the final race.&nbsp;&nbsp;
+                      The more points you have, the better your odds.
+                  </p>
+                  <p class="lead">
+                      For example, imagine that just two people are participating. You have 5 points after the final race and the other participant has 10 points.&nbsp;&nbsp;
+                      The total number of points in the pot is 15.&nbsp;&nbsp;
+                      This means your chance of winning is 5 out of 15 and your opponent’s chance of winning is 10 out of 15.
+                  </p>
+              </td>
+          </tr>
+          <tr>
+              <td>
+                  <p class="text-center">
+                      <button type="submit" class="btn btn-default" disabled="disabled"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
+                  </p>
+              </td>
+          </tr>
+      </table>
+}

@@ -1,14 +1,36 @@
 ﻿body {
-    padding-top: 50px;
+    padding-top: 20px;
     padding-bottom: 20px;
+    font-family: "Open Sans"
 }
 
+.lead {
+    font-size: 1.3em;
+}
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;
     padding-right: 15px;
+    width: 900px;
+    box-shadow: 0 0 30px black;
+    padding:30px 30px 30px 30px;
 }
 
+.widebody {
+    width: 1100px;
+}
+
+.smaller {
+    width: 60px;
+}
+
+.small {
+    width: 80px;
+}
+
+.medium {
+    width: 100px;
+}
 /* Override the default bootstrap behavior where horizontal description lists 
    will truncate terms that are too long to fit in the left column 
 */
@@ -22,3 +44,111 @@ select,
 textarea {
     max-width: 280px;
 }
+
+th {
+    background-color: #f1f1f1;
+}
+#uoprogress {
+    background-color: green;
+    height: 100px;
+}
+
+#ouprogress {
+    background-color: darkorange;
+    height: 100px;
+}
+
+.progress {
+    height: 100px;
+}
+
+#winnerMessage {
+    display: none;
+}
+
+.smaller {
+    width: 25px;
+}
+
+.small {
+    width: 40px;
+}
+
+.medium {
+    width: 60px;
+}
+
+.large {
+    width: 500px;
+}
+
+.fullwidth {
+    width: 100%;
+}
+
+#AfterPointsLabel {
+    display: none;
+}
+
+#uowinning {
+    display: none;
+}
+
+#ouwinning {
+    display: none;
+}
+
+#ready {
+    display: none;
+}
+
+#set {
+    display: none;
+}
+
+#go {
+    display: none;
+}
+
+.uoWon {
+    display: none;
+}
+
+.ouWon {
+    display: none;
+}
+
+#uoWon {
+    display: none;
+}
+
+.yellow {
+    background-color: yellow;
+}
+
+.orange {
+    background-color: orange;
+}
+
+checkbox {
+    width: 40px;
+    height: 40px;
+}
+
+li {
+    text-decoration: none;
+}
+
+#AnswerFlagTrue {
+    display: none;
+}
+
+#audioplayer {
+    display: none;
+}
+
+audio {
+    display: none;
+}
+input[type='radio'] { transform: scale(2); }
+

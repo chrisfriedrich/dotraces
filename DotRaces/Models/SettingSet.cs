@@ -24,19 +24,7 @@ namespace DotRaces.Models
         public string NumberOfRacesAdjective { get; set; }
 
         public int LastRaceMultiplier { get; set; }
-
-        public List<Race> Races { get; set; }
-        public List<Question> FirstQuestions { get; set; }
-        public List<Question> SecondQuestions { get; set; }
-        public List<Question> EndQuestions { get; set; }
-
-        public SettingSet()
-        {
-            Races = new List<Race>();
-            FirstQuestions = new List<Question>();
-            SecondQuestions = new List<Question>();
-            EndQuestions = new List<Question>();
-        }
     }
-
 }
+
+

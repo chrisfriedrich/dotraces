@@ -1,0 +1,28 @@
+﻿@model DotRaces.Models.Survey
+@{
+    ViewBag.Title = "FinalRaceIntro";
+}
+
+<table style="margin: 0 auto;">
+    <tr>
+        <td>
+            <p class="lead">
+                When you click below, the final race will appear.
+            </p>
+            <p class="lead">
+                After the race, you will be asked a series of questions.
+            </p>
+        </td>
+    </tr>
+    <tr>
+        <td>
+            @using (Html.BeginForm())
+            {
+                @Html.HiddenFor(x => x.SurveyID)
+                <p class="text-center">
+                    <button type="submit" class="btn btn-default btn-success"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
+                </p>
+            }
+        </td>
+    </tr>
+</table>

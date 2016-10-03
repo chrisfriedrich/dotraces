@@ -1,0 +1,75 @@
+﻿@model DotRaces.Models.EnjoymentViewModel
+@{
+    ViewBag.Title = "Thoughts";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.SurveyID)
+<p class="lead">
+    We'd now like to learn your feelings and thoughts about both Oregon State University (<span class="text-warning"><strong>OSU</strong></span>) and the University of Oregon (<span class="text-success"><strong>UO</strong></span>).
+</p>
+<p class="lead">
+    Please indicate how strongly you agree or disagree with each of the following:
+</p>
+
+
+<table class="table table-bordered" style="width:85%; margin: 0 auto;">
+    @for (int i = 0; i < Model.Questions.Count(); i++)
+    {
+        <tr>
+            <td colspan="7" style="vertical-align: text-bottom;">
+                <p class="lead" style="margin-bottom: 0; padding-bottom: 0; padding-top: 15px;">
+                    @Html.Raw(System.Web.HttpUtility.HtmlDecode(Model.Questions[i].QuestionText))
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <th style="width: 14.29%; text-align: center;">
+                <script type="text/javascript">
+                    $(document).ready(function () {
+
+                        $(function () {
+                            $("#@Model.Questions[i].QuestionID").slider({
+                                value: 4,
+                                min: 1,
+                                max: 7,
+                                step: 1,
+                                slide: function (event, ui) {
+                                    $("#Answers_" + @i + "__AnswerValue").val(ui.value);
+                                }
+                            });
+                            $("#Answers_" + @i + "__AnswerValue").val($("#@Model.Questions[i].QuestionID").slider("value"));
+                        });
+                    });
+                </script>
+                @Model.Questions[i].LowScaleDescription
+            </th>
+            <th style="width: 14.29%"></th>
+            <th style="width: 14.29%"></th>
+            <th style="width: 14.29%"></th>
+            <th style="width: 14.29%"></th>
+            <th style="width: 14.29%"></th>
+            <th style="width: 14.29%">
+                @Model.Questions[i].HighScaleDescription
+            </th>
+        </tr>
+        <tr>
+            <td colspan="7">
+                <p>
+                    <div style="width: 90%; margin: 0 auto;" id="@Model.Questions[i].QuestionID"></div>
+                    @Html.HiddenFor(x => x.Answers[i].AnswerValue)
+                    @Html.HiddenFor(x => x.Answers[i].QuestionID)
+                    @Html.HiddenFor(x => x.Answers[i].SurveyID)
+                    @Html.HiddenFor(x => x.Answers[i].QuestionRoundNum)
+                </p>
+            </td>
+        </tr>
+
+    }
+</table><br />
+            <p class="text-center">
+                <button type="submit" class="btn btn-default btn-success"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
+            </p>
+
+}

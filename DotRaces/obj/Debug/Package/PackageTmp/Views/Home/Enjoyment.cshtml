@@ -1,0 +1,69 @@
+﻿@model DotRaces.Models.EnjoymentViewModel
+@{
+    ViewBag.Title = "Enjoyment Questions";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.SurveyID)
+
+    for (int i = 0; i < Model.Questions.Count(); i++)
+    {
+    <script type="text/javascript">
+                        $(document).ready(function () {
+
+                            $(function () {
+                                $("#@Model.Questions[i].QuestionID").slider({
+                                    value: 4,
+                                    min: 1,
+                                    max: 7,
+                                    step: 1,
+                                    slide: function (event, ui) {
+                                        $("#Answers_" + @i + "__AnswerValue").val(ui.value);
+                                    }
+                                });
+                                $("#Answers_" + @i + "__AnswerValue").val($("#@Model.Questions[i].QuestionID").slider("value"));
+                            });
+                        });
+    </script>
+    }
+
+<p class="lead">Please indicate your reaction to the series of races you saw.</p>
+
+<table class="table table-bordered" style="width: 85%; margin: 0 auto;">
+
+
+    @for(int i = 0; i < Model.Questions.Count(); i++)
+    {
+
+            <tr>
+                <th style="width: 14.29%; text-align: center;">
+                    @Model.Questions[i].LowScaleDescription
+                </th>
+                <th style="width: 14.29%"></th>
+                <th style="width: 14.29%"></th>
+                <th style="width: 14.29%"></th>
+                <th style="width: 14.29%"></th>
+                <th style="width: 14.29%"></th>
+                <th style="width: 14.29%">
+                    @Model.Questions[i].HighScaleDescription
+                </th>
+            </tr>
+            <tr>
+                <td colspan="7">
+                    <p>
+                        <div style="width: 90%; margin: 0 auto;" id="@Model.Questions[i].QuestionID"></div>
+                        @Html.HiddenFor(x => x.Answers[i].AnswerValue)
+                        @Html.HiddenFor(x => x.Answers[i].QuestionID)
+                        @Html.HiddenFor(x => x.Answers[i].SurveyID)
+                        @Html.HiddenFor(x => x.Answers[i].QuestionRoundNum)
+                    </p>
+                </td>
+            </tr>
+    }
+</table>
+    <br />
+<p class="text-center">
+    <button type="submit" class="btn btn-default btn-success"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
+</p>
+}

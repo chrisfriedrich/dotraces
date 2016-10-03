@@ -1,0 +1,141 @@
+﻿@model DotRaces.Models.RaceViewModel
+@{
+    ViewBag.Title = "Final Race";
+    Layout = "~/Views/Shared/_LayoutWide.cshtml";
+}
+@*@if (Model.Race.Winner)
+{*@
+
+@*}
+else
+{*@
+
+@*}*@
+
+<audio id="startaudio" controls="">
+    <source src="@Url.Action("startaudio")" type="audio/mp3" />
+</audio>
+
+<audio id="crowdaudio" controls="">
+    <source src="@Url.Action("crowdaudio")" type="audio/mp3" />
+</audio>
+
+<audio id="cheer1audio" controls="">
+    <source src="@Url.Action("cheer1audio")" type="audio/mp3" />
+</audio>
+
+<audio id="cheer2audio" controls="">
+    <source src="@Url.Action("cheer2audio")" type="audio/mp3" />
+</audio>
+
+<audio id="cheer3audio" controls="">
+    <source src="@Url.Action("cheer3audio")" type="audio/mp3" />
+</audio>
+
+
+@using (Html.BeginForm("FinalRace", "Home", FormMethod.Post, new { id = "raceForm" }))
+{
+    @Html.ValidationSummary(true)
+
+    @Html.HiddenFor(x => x.RaceID)
+    @Html.HiddenFor(x => x.RaceNum)
+    @Html.HiddenFor(x => x.SurveyID)
+
+    @Html.HiddenFor(x => x.Race.Difference1)
+    @Html.HiddenFor(x => x.Race.Difference2)
+    @Html.HiddenFor(x => x.Race.Difference3)
+    @Html.HiddenFor(x => x.Race.Difference4)
+    @Html.HiddenFor(x => x.Race.Difference5)
+    @Html.HiddenFor(x => x.Race.Difference6)
+    @Html.HiddenFor(x => x.Race.Difference7)
+    @Html.HiddenFor(x => x.Race.Difference8)
+    @Html.HiddenFor(x => x.Race.Difference9)
+    @Html.HiddenFor(x => x.Race.Difference10)
+    @Html.HiddenFor(x => x.Race.Difference11)
+    @Html.HiddenFor(x => x.Race.Difference12)
+    @Html.HiddenFor(x => x.Race.Difference13)
+    @Html.HiddenFor(x => x.Race.Difference14)
+    @Html.HiddenFor(x => x.Race.Difference15)
+    @Html.HiddenFor(x => x.Race.Difference16)
+
+    @Html.HiddenFor(x => x.Race.Duration)
+    @Html.HiddenFor(x => x.Race.Winner)
+
+
+
+    <script type="text/javascript" src="~/Scripts/uo_wins.js"></script>
+
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                <h1>RACE @Model.RaceNum</h1>
+                <div id="CurrentPointsLabel">
+                    <h3>CURRENT POINTS: @Model.CurrentPoints</h3>
+                </div>
+                <div id="AfterPointsLabel">
+                    <h3>CURRENT POINTS: @Model.AfterPoints</h3>
+                </div>
+
+                @Html.HiddenFor(x => x.CurrentPoints)
+                @Html.HiddenFor(x => x.AfterPoints)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%;" background="~/Content/Images/field.png">
+                    <tr>
+                        <td style="height: 32px; border-bottom: none;"></td>
+                    </tr>
+                    <tr>
+                        <td style="width: 8%; border-top: none;" class="uoBox">
+                            <div id="uowinning">
+                                <h4 class="text-center">WINNING</h4>
+                            </div>
+                        </td>
+                        <td style="padding: 10px;" class="uoBox" valign="middle">
+                            <div class="col-lg-10 col-lg-offset-1 progress-bar progress-bar-striped active" id="gbox" style="background-color:#19453B;height:100px;width:0px;margin:6px;transition:none;"></div>
+                            <div style="display: table-cell; float: left; vertical-align: middle;">
+                                <img style="height: 100px;" src="@Url.Content("~/Content/Images/oregonfootball.png")" alt="Oregon" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="width: 8%;" class="ouBox">
+                            <h4 id="ouwinning" class="text-center">WINNING</h4>
+                        </td>
+                        <td style="padding: 10px;" class="ouBox" valign="middle">
+                            <div class="col-lg-10 col-lg-offset-1 progress-bar progress-bar-striped active" id="box" style="background-color:#F47321;height:100px;width:0px;margin:6px;transition:none;"></div>
+                            <div style="display: table-cell; float: left; vertical-align: middle;">
+                                <img style="height: 100px;" src="@Url.Content("~/Content/Images/oregonstatefootball.png")" alt="Oregon State" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 32px; border-bottom: none;"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="height: 100px;">
+                <h3 class="text-center" id="ready">Ready</h3>
+
+                <h3 class="text-center" id="set">Set</h3>
+
+                <h3 class="text-center" id="go">Go!</h3>
+                <h1 class="text-center uoWon">
+                    Oregon Wins
+                </h1>
+                <h1 class="text-center ouWon">
+                    Oregon State Wins
+                </h1>
+            </td>
+        </tr>
+    </table>
+    @*<script type="text/javascript" src="~/Scripts/uo_wins.js"></script>*@
+}
+
+
+
+
+
