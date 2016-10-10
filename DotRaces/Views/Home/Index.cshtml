@@ -18,8 +18,13 @@
         });
     });
 </script>
+
 @using (Html.BeginForm("Index", "Home"))
-{   
+{
+    
+    <p class="text-right">
+       @ViewBag.Version
+    </p>   
     @Html.HiddenFor(x => x.CreatedDate)
     @Html.HiddenFor(x => x.SettingsID)
     @Html.HiddenFor(x => x.PointTotal)

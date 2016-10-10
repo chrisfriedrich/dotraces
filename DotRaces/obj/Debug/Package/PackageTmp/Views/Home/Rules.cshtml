@@ -29,32 +29,33 @@
               <td>
                   <p class="lead">
                       <br />
-                      Each of the seven races you see will feature two icons.&nbsp;&nbsp;
+                      Each of the @ViewBag.LastRaceNoun races you see will feature two icons.&nbsp;&nbsp;
                       One icon represents the University of Oregon Ducks and the other represents the Oregon State University Beavers.
                   </p>
                   <p class="lead">
-                      Every time your school’s icon wins, you will receive 5 points.&nbsp;&nbsp;
+                      Every time your school’s icon wins, you will receive @ViewBag.PointsPerRound points.&nbsp;&nbsp;
                       When the opponent wins, you receive 0 points.
                   </p>
                   <p class="lead">
-                      Prior to the final race, you will be asked if you’d like to take a bet.&nbsp;&nbsp;
-                      If your icon wins, you will receive double your point total.&nbsp;&nbsp;
-                      If your icon loses, you will lose all your points.
+                      After the @ViewBag.SecondToLastRaceAdjective race, you will be asked if you’d like to take a bet on the outcome of the @ViewBag.LastRaceAdjective (final) race.&nbsp;&nbsp;
+                      If you choose to take the bet, a win in the @ViewBag.LastRaceAdjective race will @ViewBag.MultiplierVerb your point total.&nbsp;&nbsp;
+                      A loss will remove all of your points.&nbsp;&nbsp;
+                      If you choose not to take the bet, your point total will not change regardless of the outcome of the seventh race.
                   </p>
                   <p class="lead">
-                      So, assume you have 10 points before the seventh and final race.&nbsp;&nbsp;
+                      So, assume you have @ViewBag.BeginTotal points before the @ViewBag.LastRaceAdjective and final race.&nbsp;&nbsp;
                       You decide <strong>“Yes, I want to take the bet.”</strong>&nbsp;
-                      If your icon wins, you will have 20 points total after all the races are over.&nbsp;&nbsp;
+                      If your icon wins, you will have @ViewBag.MultipliedTotal points total after all the races are over.&nbsp;&nbsp;
                       If your icon loses, you will have 0 points.
                   </p>
                   <p class="lead">
-                      Now, assume you have 10 points before the last race and you say <strong>“No, I don’t want to take the bet.”</strong>&nbsp;
+                      Now, assume you have @ViewBag.BeginTotal points before the last race and you say <strong>“No, I don’t want to take the bet.”</strong>&nbsp;
                       This means you will receive 0 points for the last race (win or lose), but you will keep the 10 points you already had.&nbsp;&nbsp;
-                      So, your point total after all the final race is still 10.
+                      So, your point total after all the final race is still @ViewBag.BeginTotal.
                   </p>
                   <p class="lead">
                       At the completion of the study, the total number of points you have after the final race will then be placed in a pot for a drawing with all the other study participants.&nbsp;&nbsp;
-                      We will then randomly select two lucky winners to be awarded a grand prize of a $35 gift certificate to Amazon.com.
+                      We will then randomly select two lucky winners to be awarded a grand prize of a $@ViewBag.GiftCertificateAmount gift certificate to Amazon.com.
                   </p>
                   <p class="lead">
                       Your odds of winning are based on your percentage of points in the pot after the final race.&nbsp;&nbsp;

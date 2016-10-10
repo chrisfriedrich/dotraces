@@ -86,6 +86,10 @@ th {
     width: 100%;
 }
 
+#RaceNumber {
+    display: none;
+}
+
 #AfterPointsLabel {
     display: none;
 }
@@ -151,4 +155,12 @@ audio {
     display: none;
 }
 input[type='radio'] { transform: scale(2); }
+
+#AfterUOWinsLabel {
+    display: none;
+}
+
+#AfterOSUWinsLabel {
+    display: none;
+}
 

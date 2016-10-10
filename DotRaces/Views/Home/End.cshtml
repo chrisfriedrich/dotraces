@@ -1,0 +1,39 @@
+﻿@model DotRaces.Models.Survey
+@{
+    ViewBag.Title = "Survey Complete";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.HiddenFor(x => x.SurveyID)
+    <table>
+        <tr>
+            <th class="text-center">
+                <h2 class="text-center">Survey Complete</h2>
+            </th>
+        </tr>
+        <tr>
+            <td>
+                <br />
+                <p class="lead">
+                    Thank you for your participation in the entertainment study!&nbsp;&nbsp;
+                    You have completed the study, and the session will end shortly.&nbsp;&nbsp;
+                    Please remain seated for a few more minutes until the lab monitor announces that the session is over.
+                </p>
+                <p class="lead">
+                    You may use this computer to browse the web while you wait.&nbsp;&nbsp;
+                    Please click to log out of this screen and use the web.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <br />
+                <p class="text-center">
+                    <button type="submit" class="btn btn-default btn-success"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</button>
+                </p>
+            </td>
+        </tr>
+    </table>
+}
+

@@ -138,6 +138,7 @@
     <Compile Include="Models\QuestionViewModel.cs" />
     <Compile Include="Models\Race.cs" />
     <Compile Include="Models\RaceViewModel.cs" />
+    <Compile Include="Models\Separator.cs" />
     <Compile Include="Models\SettingSet.cs" />
     <Compile Include="Models\Sound.cs" />
     <Compile Include="Models\Survey.cs" />
@@ -150,8 +151,11 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\Images\field.png" />
+    <Content Include="Content\Images\field2.png" />
     <Content Include="Content\Images\oregonfootball.png" />
     <Content Include="Content\Images\oregonstatefootball.png" />
+    <Content Include="Content\Images\osu_logo_new.png" />
+    <Content Include="Content\Images\uo_logo_new.png" />
     <Content Include="Content\jquery-ui.css" />
     <Content Include="Content\Sounds\cheer2.mp3" />
     <Content Include="Content\Sounds\cheer3.mp3" />
@@ -269,6 +273,7 @@
     <Content Include="Views\Home\Thoughts.cshtml" />
     <Content Include="Views\Home\Final.cshtml" />
     <Content Include="Views\Shared\_LayoutWide.cshtml" />
+    <Content Include="Views\Home\End.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

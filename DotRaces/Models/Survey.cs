@@ -23,5 +23,8 @@ namespace DotRaces.Models
         public int? PointTotal { get; set; }
         public bool? ChoseToBetFlag { get; set; }
 
+        public int? UOWins { get; set; }
+        public int? OSUWins { get; set; }
+
     }
 }

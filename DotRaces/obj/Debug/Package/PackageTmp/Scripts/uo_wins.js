@@ -169,7 +169,7 @@
         $("#set").hide();
         $("#go").show();
         document.getElementById('startaudio').play();
-        document.getElementById('crowdaudio').play();
+        //document.getElementById('crowdaudio').play();
     }, 3000);
 
     setTimeout(function () {
@@ -193,7 +193,7 @@
         boxAnimate();
         gboxAnimate();
         setInterval(function () { checkWinners() }, 50);
-    }, 3000);
+    }, 3400);
 
     setTimeout(function () {
         $('#CurrentPointsLabel').hide();

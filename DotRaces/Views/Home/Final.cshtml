@@ -4,14 +4,14 @@
 }
 
 @using (Html.BeginForm())
-
 {
+    @Html.HiddenFor(x => x.SurveyID)
     for (int i = 0; i < Model.Questions.Count(); i++)
     {
         <script type="text/javascript">
                         $(document).ready(function () {
 
-                            $(function () {
+                            @*$(function () {
                                 $("#@Model.Questions[i].QuestionID").slider({
                                     value: 4,
                                     min: 1,
@@ -22,7 +22,27 @@
                                     }
                                 });
                                 $("#Answers_" + @i + "__AnswerValue").val($("#@Model.Questions[i].QuestionID").slider("value"));
-                            });
+                            });*@
+                                $(function() {
+                                    var button = $(':submit').prop('disabled', true);
+                                    $(':submit').removeClass('')
+                                    var radios = $('input[type="radio"]');
+                                    var arr = $.map(radios, function(el) {
+                                        return el.name;
+                                    });
+
+                                    var groups = $.grep(arr, function(v, k) {
+                                        return $.inArray(v, arr) === k;
+                                    }).length;
+
+                                    radios.on('change', function() {
+                                        button.prop('disabled', radios.filter(':checked').length < groups);
+                                        if (radios.filter(':checked').length == groups)
+                                        {
+                                            button.addClass('btn-success');
+                                        }
+                                    });
+                                });
                         });
         </script>
     }
@@ -54,7 +74,31 @@
                 </th>
             </tr>
             <tr>
-                <td colspan="7">
+                <td style="text-align: center;">
+                    <input type="radio" name="Answers[@i].AnswerValue" value="1" />
+                </td>
+                <td style="text-align: center;">
+                    <input type="radio" name="Answers[@i].AnswerValue" value="2" />
+                </td>
+                <td style="text-align: center;">
+                    <input type="radio" name="Answers[@i].AnswerValue" value="3" />
+                </td>
+                <td style="text-align: center;">
+                    <input type="radio" name="Answers[@i].AnswerValue" value="4" />
+                </td>
+                <td style="text-align: center;">
+                    <input type="radio" name="Answers[@i].AnswerValue" value="5" />
+                </td>
+                <td style="text-align: center;">
+                    <input type="radio" name="Answers[@i].AnswerValue" value="6" />
+                </td>
+                <td style="text-align: center;">
+                    <input type="radio" name="Answers[@i].AnswerValue" value="7" />
+                    @Html.HiddenFor(x => x.Answers[i].QuestionID)
+                    @Html.HiddenFor(x => x.Answers[i].SurveyID)
+                    @Html.HiddenFor(x => x.Answers[i].QuestionRoundNum)
+                </td>
+                @*<td colspan="7">
                     <p>
                         <div style="width: 90%; margin: 0 auto;" id="@Model.Questions[i].QuestionID"></div>
                         @Html.HiddenFor(x => x.Answers[i].AnswerValue)
@@ -62,14 +106,14 @@
                         @Html.HiddenFor(x => x.Answers[i].SurveyID)
                         @Html.HiddenFor(x => x.Answers[i].QuestionRoundNum)
                     </p>
-                </td>
+                </td>*@
             </tr>
         }
     </table>
     <br />
-    <h3 class="text-center">Thank you for completing this survey.</h3><br />
+    @*<h3 class="text-center">Thank you for completing this survey.</h3><br />*@
     <p class="text-center">
-        <button type="submit" class="btn btn-default btn-lg btn-success"><span class="glyphicon glyphicon-log-out"></span>&nbsp;&nbsp;Logout</button>
+        <button type="submit" class="btn btn-default"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
     </p>
 }
 

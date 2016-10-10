@@ -18,11 +18,28 @@ namespace DotRaces.Controllers
         public ActionResult Index()
         {
             Survey survey = new Survey();
-            SettingSet settings = db.SettingSets.FirstOrDefault(x => x.DefaultSetFlag == true);
+            Separator separator = db.Separators.Find(1);
+            SettingSet settings;
+            if (separator.CurrentVersion == true)
+            {
+                settings = db.SettingSets.Find(1);
+                separator.CurrentVersion = false;
+                db.Entry(separator).State = EntityState.Modified;
+                db.SaveChanges();
+                ViewBag.Version = "UO";
+            }
+            else
+            {
+                settings = db.SettingSets.Find(2);
+                separator.CurrentVersion = true;
+                db.Entry(separator).State = EntityState.Modified;
+                db.SaveChanges();
+                ViewBag.Version = "OU";
+            }
+
             survey.PointTotal = 0;
             survey.SettingsID = settings.SettingSetID;
             survey.CreatedDate = DateTime.Now;
-
             return View(survey);
         }
 
@@ -55,7 +72,68 @@ namespace DotRaces.Controllers
         public ActionResult Rules(int id)
         {
             Survey survey = db.Surveys.Find(id);
+            SettingSet settings = db.SettingSets.Find(survey.SettingsID);
 
+            string lastRaceNoun = "";
+            string lastRaceAdjective = "";
+
+            string secondToLastRaceNoun = "";
+            string secondToLastRaceAdjective = "";
+
+            switch (settings.NumberOfRaces)
+            {
+                case 5:
+                    lastRaceNoun = "five";
+                    lastRaceAdjective = "fifth";
+                    secondToLastRaceNoun = "four";
+                    secondToLastRaceAdjective = "fourth";
+                    break;
+                case 7:
+                    lastRaceNoun = "seven";
+                    lastRaceAdjective = "seventh";
+                    secondToLastRaceNoun = "six";
+                    secondToLastRaceAdjective = "sixth";
+                    break;
+                case 9:
+                    lastRaceNoun = "nine";
+                    lastRaceAdjective = "ninth";
+                    secondToLastRaceNoun = "eight";
+                    secondToLastRaceAdjective = "eighth";
+                    break;
+                case 11:
+                    lastRaceNoun = "eleven";
+                    lastRaceAdjective = "eleventh";
+                    secondToLastRaceNoun = "ten";
+                    secondToLastRaceAdjective = "tenth";
+                    break;
+            }
+
+            string multiplierVerb = "";
+
+            switch (settings.LastRaceMultiplier)
+            {
+                case 2:
+                    multiplierVerb = "double";
+                    break;
+                case 3:
+                    multiplierVerb = "triple";
+                    break;
+                case 4:
+                    multiplierVerb = "quadruple";
+                    break;
+            }
+
+            ViewBag.MultiplierVerb = multiplierVerb;
+            ViewBag.LastRaceNoun = lastRaceNoun;
+            ViewBag.LastRaceAdjective = lastRaceAdjective;
+            ViewBag.SecondToLastRaceNoun = secondToLastRaceNoun;
+            ViewBag.SecondToLastRaceAdjective = secondToLastRaceAdjective;
+
+            ViewBag.BeginTotal = settings.PotentialLowScore;
+            ViewBag.MultipliedTotal = 2 * settings.PotentialLowScore;
+
+            ViewBag.GiftCertificateAmount = "35";
+            
             return View(survey);
         }
 
@@ -110,8 +188,6 @@ namespace DotRaces.Controllers
 
         public ActionResult Race(int id, int? num)
         {
-
-
             RaceViewModel model = new RaceViewModel();
             Survey survey = db.Surveys.Find(id);
             SettingSet settings = db.SettingSets.Find(survey.SettingsID);
@@ -134,13 +210,18 @@ namespace DotRaces.Controllers
                     {
                         model.Race = race;
                         model.CurrentPoints = 0;
-                        if(race.Winner)
+                        model.UOWins = 0;
+                        model.OSUWins = 0;
+
+                        if (race.Winner)
                         {
                             model.AfterPoints = settings.PointsPerRound;
+                            model.AfterUOWins = 1;
                         }
                         else
                         {
                             model.AfterPoints = 0;
+                            model.AfterOSUWins = 1;
                         }
 
                         model.RaceID = race.RaceID;
@@ -170,11 +251,17 @@ namespace DotRaces.Controllers
                             if (survey.PointTotal == null)
                             {
                                 survey.PointTotal = settings.PointsPerRound;
+                                //model.UOWins++;
                             }
                             else
                             {
                                 survey.PointTotal += settings.PointsPerRound;
                             }
+                            model.UOWins++;
+                        }
+                        else
+                        {
+                            model.OSUWins++;
                         }
 
                         db.Entry(survey).State = EntityState.Modified;
@@ -185,10 +272,12 @@ namespace DotRaces.Controllers
                         if(race.Winner)
                         {
                             model.AfterPoints = model.CurrentPoints + settings.PointsPerRound;
+                            model.AfterUOWins++;
                         }
                         else
                         {
                             model.AfterPoints = model.CurrentPoints;
+                            model.AfterOSUWins++;
                         }
                        
                         model.RaceID = race.RaceID;
@@ -203,6 +292,11 @@ namespace DotRaces.Controllers
                     if (lastRace.Winner)
                     {
                         survey.PointTotal += settings.PointsPerRound;
+                        model.UOWins++;
+                    }
+                    else
+                    {
+                        model.OSUWins++;
                     }
 
                     db.Entry(survey).State = EntityState.Modified;
@@ -217,7 +311,87 @@ namespace DotRaces.Controllers
         [HttpPost]
         public ActionResult Race(RaceViewModel model)
         {
-            return RedirectToAction("Race", new { id = model.SurveyID, num = model.RaceNum, tot = model.AfterPoints });
+            //return RedirectToAction("Race", new { id = model.SurveyID, num = model.RaceNum, tot = model.AfterPoints });
+            //RaceViewModel model = new RaceViewModel();
+            Survey survey = db.Surveys.Find(model.SurveyID);
+            SettingSet settings = db.SettingSets.Find(survey.SettingsID);
+
+            // Get the Races
+
+            List<Race> races = db.Races.Where(x => x.SettingSetID == survey.SettingsID).OrderBy(x => x.RaceNum).ToList();
+
+            Race lastRace = races.FirstOrDefault(x => x.RaceNum == model.RaceNum);
+
+            int currentNum = (int)model.RaceNum + 1;
+
+            if (currentNum < settings.NumberOfRaces)
+            {
+                Race race = races.FirstOrDefault(x => x.RaceNum == currentNum);
+                if (race != null)
+                {
+                    model.Race = race;
+
+                    if (lastRace.Winner)
+                    {
+                        if (survey.PointTotal == null)
+                        {
+                            survey.PointTotal = settings.PointsPerRound;
+                            //model.UOWins++;
+                        }
+                        else
+                        {
+                            survey.PointTotal += settings.PointsPerRound;
+                        }
+                        model.UOWins++;
+                    }
+                    else
+                    {
+                        model.OSUWins++;
+                    }
+
+                    db.Entry(survey).State = EntityState.Modified;
+                    db.SaveChanges();
+
+                    model.CurrentPoints = (int)survey.PointTotal;
+
+                    if (race.Winner)
+                    {
+                        model.AfterPoints = model.CurrentPoints + settings.PointsPerRound;
+                        model.AfterUOWins++;
+                    }
+                    else
+                    {
+                        model.AfterPoints = model.CurrentPoints;
+                        model.AfterOSUWins++;
+                    }
+
+                    model.RaceID = race.RaceID;
+                    model.RaceNum = currentNum;
+                    model.SurveyID = survey.SurveyID;
+                    ModelState.Clear();
+                    return View(model);
+                }
+            }
+            else
+            {
+
+                if (lastRace.Winner)
+                {
+                    survey.PointTotal += settings.PointsPerRound;
+                    model.UOWins++;
+                }
+                else
+                {
+                    model.OSUWins++;
+                }
+
+                survey.UOWins = model.UOWins;
+                survey.OSUWins = model.OSUWins;
+                db.Entry(survey).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Bet", new { id = survey.SurveyID });
+            }
+            return View(model);
         }
 
         public ActionResult Bet(int? id)
@@ -387,6 +561,8 @@ namespace DotRaces.Controllers
             model.RaceID = race.RaceID;
             model.RaceNum = race.RaceNum;
             model.SurveyID = survey.SurveyID;
+            model.OSUWins = (int)survey.OSUWins;
+            model.UOWins = (int)survey.UOWins;
 
             if (race.Winner && (bool)survey.ChoseToBetFlag)
             {
@@ -403,6 +579,17 @@ namespace DotRaces.Controllers
             else
             {
                 model.AfterPoints = (int)survey.PointTotal;
+            }
+
+            if(!race.Winner)
+            {
+                model.AfterOSUWins = model.OSUWins + 1;
+                model.AfterUOWins = model.UOWins;
+            }
+            else
+            {
+                model.AfterUOWins = model.UOWins + 1;
+                model.AfterOSUWins = model.OSUWins;
             }
             return View(model);
         }
@@ -540,7 +727,20 @@ namespace DotRaces.Controllers
 
             List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 3).ToList();
             List <Answer> answers = new List<Answer>();
-            foreach(Question question in questions)
+
+            List<Question> shuffledQuestions = new List<Question>();
+
+            int n = questions.Count();
+            while (n >= 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                Question question = questions[k];
+                questions.Remove(question);
+                shuffledQuestions.Add(question);
+            }
+
+            foreach (Question question in shuffledQuestions)
             {
                 Answer answer = new Answer();
                 answer.SurveyID = survey.SurveyID;
@@ -551,7 +751,7 @@ namespace DotRaces.Controllers
             }
 
             model.SurveyID = survey.SurveyID;
-            model.Questions = questions;
+            model.Questions = shuffledQuestions;
             model.Answers = answers;
             return View(model);
         }
@@ -577,8 +777,27 @@ namespace DotRaces.Controllers
             EnjoymentViewModel model = new EnjoymentViewModel();
 
             List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 4).OrderBy(x => x.GroupQuestionNumber).ToList();
+
+            List<Question> ouQuestions = questions.Where(x => x.GroupQuestionNumber < 5).ToList();
+            List<Question> uoQuestions = questions.Where(x => x.GroupQuestionNumber > 4).ToList();
+
+            List<Question> thoughtsQuestions = new List<Question>();
+
+            int k = random.Next(0, 2);
+
+            if(k == 0)
+            {
+                thoughtsQuestions.AddRange(ouQuestions);
+                thoughtsQuestions.AddRange(uoQuestions);
+            }
+            else
+            {
+                thoughtsQuestions.AddRange(uoQuestions);
+                thoughtsQuestions.AddRange(ouQuestions);
+            }
+
             List<Answer> answers = new List<Answer>();
-            foreach (Question question in questions)
+            foreach (Question question in thoughtsQuestions)
             {
                 Answer answer = new Answer();
                 answer.SurveyID = survey.SurveyID;
@@ -589,7 +808,7 @@ namespace DotRaces.Controllers
             }
 
             model.SurveyID = survey.SurveyID;
-            model.Questions = questions;
+            model.Questions = thoughtsQuestions;
             model.Answers = answers;
             return View(model);
         }
@@ -616,7 +835,20 @@ namespace DotRaces.Controllers
 
             List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 5).OrderBy(x => x.GroupQuestionNumber).ToList();
             List<Answer> answers = new List<Answer>();
-            foreach (Question question in questions)
+
+            List<Question> shuffledQuestions = new List<Question>();
+
+            int n = questions.Count();
+            while (n >= 1)
+            {
+                n--;
+                int k = random.Next(n + 1);
+                Question question = questions[k];
+                questions.Remove(question);
+                shuffledQuestions.Add(question);
+            }
+
+            foreach (Question question in shuffledQuestions)
             {
                 Answer answer = new Answer();
                 answer.SurveyID = survey.SurveyID;
@@ -627,7 +859,7 @@ namespace DotRaces.Controllers
             }
 
             model.SurveyID = survey.SurveyID;
-            model.Questions = questions;
+            model.Questions = shuffledQuestions;
             model.Answers = answers;
             return View(model);
         }
@@ -642,11 +874,22 @@ namespace DotRaces.Controllers
                     db.Answers.Add(answer);
                 }
                 db.SaveChanges();
-                return RedirectPermanent("https://google.com");
+                return RedirectToAction("End", new { id = model.SurveyID });
             }
             return View(model);
         }
 
+        public ActionResult End(int? id)
+        {
+            Survey survey = db.Surveys.Find(id);
+            return View(survey);
+        }
+
+        [HttpPost]
+        public ActionResult End(Survey survey)
+        {
+             return RedirectPermanent("https://google.com");
+        }
         //public ActionResult About()
         //{
         //    ViewBag.Message = "Your application description page.";
