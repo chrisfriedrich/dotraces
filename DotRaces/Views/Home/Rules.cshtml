@@ -2,15 +2,15 @@
 @{
     ViewBag.Title = "Rules";
 }
-<script>
+<script type="text/javascript">
     $(document).ready(function () {
         setTimeout(function () {
             $(":submit").addClass("btn-success");
-        }, 5990);
+        }, 59900);
 
         setTimeout(function () {
             $(':submit').prop('disabled', false);
-        }, 6000);
+        }, 60000);
     });
 </script>
 @using (Html.BeginForm("Rules", "Home"))
@@ -37,8 +37,8 @@
                       When the opponent wins, you receive 0 points.
                   </p>
                   <p class="lead">
-                      After the @ViewBag.SecondToLastRaceAdjective race, you will be asked if you’d like to take a bet on the outcome of the @ViewBag.LastRaceAdjective (final) race.&nbsp;&nbsp;
-                      If you choose to take the bet, a win in the @ViewBag.LastRaceAdjective race will @ViewBag.MultiplierVerb your point total.&nbsp;&nbsp;
+                      After the @ViewBag.SecondToLastRaceAdjective race, you will be asked if you’d like to bet on the outcome of the @ViewBag.LastRaceAdjective (final) race.&nbsp;&nbsp;
+                      If you choose to make the bet, a win in the @ViewBag.LastRaceAdjective race will @ViewBag.MultiplierVerb your point total.&nbsp;&nbsp;
                       A loss will remove all of your points.&nbsp;&nbsp;
                       If you choose not to take the bet, your point total will not change regardless of the outcome of the seventh race.
                   </p>
@@ -50,7 +50,7 @@
                   </p>
                   <p class="lead">
                       Now, assume you have @ViewBag.BeginTotal points before the last race and you say <strong>“No, I don’t want to take the bet.”</strong>&nbsp;
-                      This means you will receive 0 points for the last race (win or lose), but you will keep the 10 points you already had.&nbsp;&nbsp;
+                      This means you will receive 0 points for the last race (win or lose), but you will keep the @ViewBag.BeginTotal points you already had.&nbsp;&nbsp;
                       So, your point total after all the final race is still @ViewBag.BeginTotal.
                   </p>
                   <p class="lead">
@@ -70,6 +70,18 @@
           </tr>
           <tr>
               <td>
+                  <h3 class="text-center" id="hideMsg"><span>60</span>
+                  </h3>
+                  <script type="text/javascript">
+                      $(function() {
+                          var timer, counter = $("#hideMsg span").text();
+                          $('#hideMsg').delay(counter * 1000).fadeOut('fast');
+                          timer = setInterval(function() {
+                              $("#hideMsg span").html(--counter);
+                              if (counter == 0) { clearInterval(timer)};
+                          }, 1000);
+                      });
+                  </script>
                   <p class="text-center">
                       <button type="submit" class="btn btn-default" disabled="disabled"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
                   </p>

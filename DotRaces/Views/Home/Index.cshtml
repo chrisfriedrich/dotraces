@@ -22,9 +22,9 @@
 @using (Html.BeginForm("Index", "Home"))
 {
     
-    <p class="text-right">
+    @*<p class="text-right">
        @ViewBag.Version
-    </p>   
+    </p>*@   
     @Html.HiddenFor(x => x.CreatedDate)
     @Html.HiddenFor(x => x.SettingsID)
     @Html.HiddenFor(x => x.PointTotal)

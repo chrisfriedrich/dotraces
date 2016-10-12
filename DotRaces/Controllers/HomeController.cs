@@ -131,7 +131,7 @@ namespace DotRaces.Controllers
 
             ViewBag.BeginTotal = settings.PotentialLowScore;
             ViewBag.MultipliedTotal = 2 * settings.PotentialLowScore;
-
+            ViewBag.PointsPerRound = settings.PointsPerRound;
             ViewBag.GiftCertificateAmount = "35";
             
             return View(survey);
@@ -692,6 +692,7 @@ namespace DotRaces.Controllers
                     answer.AnswerValue = model.Answer.AnswerValue;
                     answer.SurveyID = model.Answer.SurveyID;
                     answer.QuestionID = model.Answer.QuestionID;
+                    answer.QuestionRoundNum = 2;
                     db.Answers.Add(answer);
                     db.SaveChanges();
 
@@ -699,7 +700,7 @@ namespace DotRaces.Controllers
                     newAnswer.AnswerFlag = null;
                     newAnswer.SurveyID = survey.SurveyID;
                     newAnswer.QuestionID = nextQuestion.QuestionID;
-                    newAnswer.QuestionRoundNum = nextQuestion.QuestionRoundNum;
+                    newAnswer.QuestionRoundNum = 2;
                     model.Answer = newAnswer;
                     ModelState.Clear();
                     return View(model);
@@ -710,7 +711,7 @@ namespace DotRaces.Controllers
                 finalAnswer.AnswerValue = model.Answer.AnswerValue;
                 finalAnswer.SurveyID = model.Answer.SurveyID;
                 finalAnswer.QuestionID = model.Answer.QuestionID;
-                finalAnswer.QuestionRoundNum = model.Answer.QuestionRoundNum;
+                finalAnswer.QuestionRoundNum = 2;
                 db.Answers.Add(finalAnswer);
                 db.SaveChanges();
 
@@ -723,9 +724,10 @@ namespace DotRaces.Controllers
         public ActionResult Enjoyment(int? id)
         {
             Survey survey = db.Surveys.Find(id);
+            SettingSet settings = db.SettingSets.Find(survey.SettingsID);
             EnjoymentViewModel model = new EnjoymentViewModel();
 
-            List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 3).ToList();
+            List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 3 && x.SettingSetID == settings.SettingSetID).ToList();
             List <Answer> answers = new List<Answer>();
 
             List<Question> shuffledQuestions = new List<Question>();
@@ -774,9 +776,10 @@ namespace DotRaces.Controllers
         public ActionResult Thoughts(int? id)
         {
             Survey survey = db.Surveys.Find(id);
+            SettingSet settings = db.SettingSets.Find(survey.SettingsID);
             EnjoymentViewModel model = new EnjoymentViewModel();
 
-            List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 4).OrderBy(x => x.GroupQuestionNumber).ToList();
+            List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 4 && x.SettingSetID == settings.SettingSetID).OrderBy(x => x.GroupQuestionNumber).ToList();
 
             List<Question> ouQuestions = questions.Where(x => x.GroupQuestionNumber < 5).ToList();
             List<Question> uoQuestions = questions.Where(x => x.GroupQuestionNumber > 4).ToList();
@@ -831,9 +834,10 @@ namespace DotRaces.Controllers
         public ActionResult Final(int? id)
         {
             Survey survey = db.Surveys.Find(id);
+            SettingSet settings = db.SettingSets.Find(survey.SettingsID);
             EnjoymentViewModel model = new EnjoymentViewModel();
 
-            List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 5).OrderBy(x => x.GroupQuestionNumber).ToList();
+            List<Question> questions = db.Questions.Where(x => x.QuestionRoundNum == 5 && x.SettingSetID == settings.SettingSetID).OrderBy(x => x.GroupQuestionNumber).ToList();
             List<Answer> answers = new List<Answer>();
 
             List<Question> shuffledQuestions = new List<Question>();
