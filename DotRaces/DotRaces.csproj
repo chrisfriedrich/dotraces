@@ -216,6 +216,7 @@
     <Content Include="Content\bootstrap.css.map" />
     <Content Include="Content\bootstrap-theme.min.css.map" />
     <Content Include="Content\bootstrap-theme.css.map" />
+    <None Include="Properties\PublishProfiles\Abyss.pubxml" />
     <None Include="Properties\PublishProfiles\dotraces - FTP.pubxml" />
     <None Include="Properties\PublishProfiles\dotraces - Web Deploy.pubxml" />
     <None Include="Scripts\jquery-3.1.0.intellisense.js" />

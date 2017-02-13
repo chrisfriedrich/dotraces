@@ -1,0 +1,428 @@
+﻿@model DotRaces.Models.RaceViewModel
+@{
+    ViewBag.Title = "Race";
+    Layout = "~/Views/Shared/_LayoutWide.cshtml";
+}
+
+<audio id="startaudio" controls="">
+    <source src="@Url.Action("startaudio")" type="audio/mp3" />
+</audio>
+
+<audio id="crowdaudio" controls="">
+    <source src="@Url.Action("crowdaudio")" type="audio/mp3" />
+</audio>
+
+<audio id="cheer1audio" controls="">
+    <source src="@Url.Action("cheer1audio")" type="audio/mp3" />
+</audio>
+
+<audio id="cheer2audio" controls="">
+    <source src="@Url.Action("cheer2audio")" type="audio/mp3" />
+</audio>
+
+<audio id="cheer3audio" controls="">
+    <source src="@Url.Action("cheer3audio")" type="audio/mp3" />
+</audio>
+
+@using (Html.BeginForm("Race", "Home", FormMethod.Post, new { id = "raceForm" }))
+{
+    @Html.ValidationSummary(true)
+
+@Html.HiddenFor(x => x.RaceID)
+@Html.HiddenFor(x => x.RaceNum)
+@Html.HiddenFor(x => x.SurveyID)
+
+@Html.HiddenFor(x => x.Race.Difference1)
+@Html.HiddenFor(x => x.Race.Difference2)
+@Html.HiddenFor(x => x.Race.Difference3)
+@Html.HiddenFor(x => x.Race.Difference4)
+@Html.HiddenFor(x => x.Race.Difference5)
+@Html.HiddenFor(x => x.Race.Difference6)
+@Html.HiddenFor(x => x.Race.Difference7)
+@Html.HiddenFor(x => x.Race.Difference8)
+@Html.HiddenFor(x => x.Race.Difference9)
+@Html.HiddenFor(x => x.Race.Difference10)
+@Html.HiddenFor(x => x.Race.Difference11)
+@Html.HiddenFor(x => x.Race.Difference12)
+@Html.HiddenFor(x => x.Race.Difference13)
+@Html.HiddenFor(x => x.Race.Difference14)
+@Html.HiddenFor(x => x.Race.Difference15)
+@Html.HiddenFor(x => x.Race.Difference16)
+
+@Html.HiddenFor(x => x.Race.Duration)
+@Html.HiddenFor(x => x.Race.Winner)
+
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+
+            //$("#AfterPointsLabel").hide();
+            //var audioElement = document.createElement('audio');
+            //audioElement.setAttribute('src', '~/Content/Sounds/pistol.mp3');
+            //audioElement.setAttribute('autoplay', 'autoplay');
+            ////audioElement.load()
+            //$.get();
+            //audioElement.addEventListener("load", function () {
+            //    audioElement.play();
+            //}, true);
+
+            var seconds = parseInt($("#Race_Duration").val());
+            var duration = seconds * 1000;
+
+            var percent1 = .0625;
+            var step1 = ((percent1) * duration);
+            var diff1 = parseFloat($("#Race_Difference1").val());
+
+            var percent2 = .1250;
+            var step2 = ((percent2) * duration);
+            var diff2 = parseFloat($("#Race_Difference2").val());
+
+            var percent3 = .1875;
+            var step3 = ((percent3) * duration);
+            var diff3 = parseFloat($("#Race_Difference3").val());
+
+            var percent4 = .2500;
+            var step4 = ((percent4) * duration);
+            var diff4 = parseFloat($("#Race_Difference4").val());
+
+            var percent5 = .3125;
+            var step5 = ((percent5) * duration);
+            var diff5 = parseFloat($("#Race_Difference5").val());
+
+            var percent6 = .3750;
+            var step6 = ((percent6) * duration);
+            var diff6 = parseFloat($("#Race_Difference6").val());
+
+            var percent7 = .4375;
+            var step7 = ((percent7) * duration);
+            var diff7 = parseFloat($("#Race_Difference7").val());
+
+            var percent8 = .5000;
+            var step8 = ((percent8) * duration);
+            var diff8 = parseFloat($("#Race_Difference8").val());
+
+            var percent9 = .5625;
+            var step9 = ((percent9) * duration);
+            var diff9 = parseFloat($("#Race_Difference9").val());
+
+            var percent10 = .6250;
+            var step10 = ((percent10) * duration);
+            var diff10 = parseFloat($("#Race_Difference10").val());
+
+            var percent11 = .6875;
+            var step11 = ((percent11) * duration);
+            var diff11 = parseFloat($("#Race_Difference11").val());
+
+            var percent12 = .7500;
+            var step12 = ((percent12) * duration);
+            var diff12 = parseFloat($("#Race_Difference12").val());
+
+            var percent13 = .8125;
+            var step13 = ((percent13) * duration);
+            var diff13 = parseFloat($("#Race_Difference13").val());
+
+            var percent14 = .8750;
+            var step14 = ((percent14) * duration);
+            var diff14 = parseFloat($("#Race_Difference14").val());
+
+            var percent15 = .9375;
+            var step15 = ((percent15) * duration);
+            var diff15 = parseFloat($("#Race_Difference15").val());
+
+            var percent16 = 1;
+            var step16 = ((percent16) * duration);
+            var diff16 = parseFloat($("#Race_Difference16").val());
+
+            var steps = [step1, step2, step3, step4, step5, step6, step7, step8, step9, step10, step11, step12, step13, step14, step15, step16];
+            var percents = [percent1, percent2, percent3, percent4, percent5, percent6, percent7, percent8, percent9, percent10, percent11, percent12, percent13, percent14, percent15, percent16];
+            var diffs = [diff1, diff2, diff3, diff4, diff5, diff6, diff7, diff8, diff9, diff10, diff11, diff12, diff13, diff14, diff15, diff16];
+
+            var totalWidth = 1000;
+
+            function boxAnimate() {
+                var box = $("#box");
+                box.animate({ width: percents[0] * 920 + 'px' }, (duration / 16) + ((diffs[0] / 200) * duration), 'linear');
+                box.animate({ width: percents[1] * 920 + 'px' }, (duration / 16) + ((diffs[1] / 200) * duration), 'linear');
+                box.animate({ width: percents[2] * 920 + 'px' }, (duration / 16) + ((diffs[2] / 200) * duration), 'linear');
+                box.animate({ width: percents[3] * 920 + 'px' }, (duration / 16) + ((diffs[3] / 200) * duration), 'linear');
+                box.animate({ width: percents[4] * 920 + 'px' }, (duration / 16) + ((diffs[4] / 200) * duration), 'linear');
+                box.animate({ width: percents[5] * 920 + 'px' }, (duration / 16) + ((diffs[5] / 200) * duration), 'linear');
+                box.animate({ width: percents[6] * 920 + 'px' }, (duration / 16) + ((diffs[6] / 200) * duration), 'linear');
+                box.animate({ width: percents[7] * 920 + 'px' }, (duration / 16) + ((diffs[7] / 200) * duration), 'linear');
+                box.animate({ width: percents[8] * 920 + 'px' }, (duration / 16) + ((diffs[8] / 200) * duration), 'linear');
+                box.animate({ width: percents[9] * 920 + 'px' }, (duration / 16) + ((diffs[9] / 200) * duration), 'linear');
+                box.animate({ width: percents[10] * 920 + 'px' }, (duration / 16) + ((diffs[10] / 200) * duration), 'linear');
+                box.animate({ width: percents[11] * 920 + 'px' }, (duration / 16) + ((diffs[11] / 200) * duration), 'linear');
+                box.animate({ width: percents[12] * 920 + 'px' }, (duration / 16) + ((diffs[12] / 200) * duration), 'linear');
+                box.animate({ width: percents[13] * 920 + 'px' }, (duration / 16) + ((diffs[13] / 200) * duration), 'linear');
+                box.animate({ width: percents[14] * 920 + 'px' }, (duration / 16) + ((diffs[14] / 200) * duration), 'linear');
+                box.animate({ width: percents[15] * 920 + 'px' }, (duration / 16) + ((diffs[15] / 200) * duration), 'linear');
+                checkWinners();
+            }
+
+            function gboxAnimate() {
+                var gbox = $("#gbox");
+                gbox.animate({ width: percents[0] * 920 + 'px' }, (duration / 16) - ((diffs[0] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[1] * 920 + 'px' }, (duration / 16) - ((diffs[1] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[2] * 920 + 'px' }, (duration / 16) - ((diffs[2] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[3] * 920 + 'px' }, (duration / 16) - ((diffs[3] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[4] * 920 + 'px' }, (duration / 16) - ((diffs[4] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[5] * 920 + 'px' }, (duration / 16) - ((diffs[5] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[6] * 920 + 'px' }, (duration / 16) - ((diffs[6] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[7] * 920 + 'px' }, (duration / 16) - ((diffs[7] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[8] * 920 + 'px' }, (duration / 16) - ((diffs[8] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[9] * 920 + 'px' }, (duration / 16) - ((diffs[9] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[10] * 920 + 'px' }, (duration / 16) - ((diffs[10] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[11] * 920 + 'px' }, (duration / 16) - ((diffs[11] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[12] * 920 + 'px' }, (duration / 16) - ((diffs[12] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[13] * 920 + 'px' }, (duration / 16) - ((diffs[13] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[14] * 920 + 'px' }, (duration / 16) - ((diffs[14] / 200) * duration), 'linear');
+                gbox.animate({ width: percents[15] * 920 + 'px' }, (duration / 16) - ((diffs[15] / 200) * duration), 'linear');
+                checkWinners();
+            }
+
+            var winner = null;
+
+            function checkWinners()
+            {
+                var gbox = $("#gbox");
+                var box = $("#box");
+                var uowinning = $("#uowinning");
+                var ouwinning = $("#ouwinning");
+                var uoWon = $(".uoWon");
+                var ouWon = $(".ouWon");
+
+
+                var raceWinner = $("#Race_Winner");
+
+                if(gbox.width() > box.width())
+                {
+                    uowinning.show();
+                    ouwinning.hide();
+                }
+                else if(gbox.width() < box.width())
+                {
+                    uowinning.hide();
+                    ouwinning.show();
+                }
+                else
+                {
+                    uowinning.hide();
+                    ouwinning.hide();
+                }
+
+                if (box.width() > 800 && gbox.width() < 800)
+                {
+                    ouWon.show();
+                    //$(".ouBox").addClass("orange");
+                    winner = false;
+                    //setInterval(function () {
+                        //$("#AfterOSUWinsLabel").toggleClass("orange");
+                        //$("#AfterPointsLabel").toggleClass("orange");
+                        //$("#OSUWon").toggleClass("orange");
+
+                    //}, 1000)
+                }
+
+                if (gbox.width() > 800 && box.width() < 800) {
+                    uoWon.show();
+                    winner = true;
+                    //$(".uoBox").addClass("yellow");
+                    //setInterval(function () {
+                    //$("#AfterUOWinsLabel").toggleClass("yellow");
+                    //$("#AfterPointsLabel").toggleClass("yellow");
+                    //$("#UOWon").toggleClass("yellow");
+                    //}, 1000)
+                }
+            }
+
+            setInterval(function () {
+            if (winner == true) {
+                $("#AfterUOWins").toggleClass("yellow");
+                $("#AfterPoints").toggleClass("yellow");
+                $("#UOWon").toggleClass("yellow");
+            }
+            else if (winner == false) {
+                $("#AfterOSUWins").toggleClass("orange");
+                //$("#AfterPointsLabel").toggleClass("orange");
+                $("#OSUWon").toggleClass("orange");
+            }
+            }, 200)
+
+            setTimeout(function () {
+                $("#RaceNumber").fadeIn(500);
+                document.getElementById('startaudio').volume = 0.25;
+            }, 0);
+
+            setTimeout(function () {
+                $("#ready").show();
+            }, 1000);
+
+            setTimeout(function () {
+                $("#ready").hide();
+                $("#set").show();
+            }, 2000);
+
+            setTimeout(function () {
+                $("#set").hide();
+                $("#go").show();
+                document.getElementById('startaudio').play();
+                //document.getElementById('crowdaudio').play();
+            }, 3000);
+
+            setTimeout(function () {
+                $("#go").hide();
+            }, 3300);
+
+            //setTimeout(function () {
+            //    document.getElementById('cheer1audio').play();
+            //}, duration + 2000);
+
+            //setTimeout(function () {
+            //    document.getElementById('cheer2audio').play();
+            //}, duration + 1000);
+
+            //setTimeout(function () {
+            //    document.getElementById('cheer3audio').play();
+            //}, duration + 1000);
+
+
+            setTimeout(function () {
+                boxAnimate();
+                gboxAnimate();
+                setInterval(function () { checkWinners() }, 50);
+            }, 3300);
+
+
+            setTimeout(function () {
+                $('#CurrentPointsLabel').hide();
+                $('#CurrentUOWinsLabel').hide();
+                $('#CurrentOSUWinsLabel').hide();
+            }, duration + 3300)
+
+            setTimeout(function () {
+                $('#AfterPointsLabel').show();
+                $('#AfterUOWinsLabel').show();
+                $('#AfterOSUWinsLabel').show();
+            }, duration + 3300)
+
+            setTimeout(function () {
+                $('#raceForm').submit();
+            }, duration + 10000)
+
+        });
+
+    </script>
+
+    <table class="table table-bordered">
+        <tr>
+            <td>
+                <table style="width: 100%">
+                    <tr>
+                        <td width="60%" colspan="2">
+                            <h1>RACE <strong><span id="RaceNumber">@Model.RaceNum</span></strong></h1>
+                        </td>
+                        <td width="20%" style="text-align: center">
+                            <div id="CurrentOSUWinsLabel">
+                                <h2>OSU WINS: <strong><span id="CurrentOSUWins">@Model.OSUWins</span></strong></h2>
+                                @Html.HiddenFor(x => x.OSUWins)
+                            </div>
+                            <div id="AfterOSUWinsLabel">
+                                <h2>OSU WINS: <strong><span id="AfterOSUWins">@Model.AfterOSUWins</span></strong></h2>
+                                @Html.HiddenFor(x => x.AfterOSUWins)
+                            </div>
+                        </td>
+                        <td width="20%" style="text-align: center;">
+                            <div id="CurrentUOWinsLabel">
+                                <h2>UO WINS: <strong><span id="CurrentUOWins">@Model.UOWins</span></strong></h2>
+                                @Html.HiddenFor(x => x.UOWins)
+                            </div>
+                            <div id="AfterUOWinsLabel">
+                                <h2>UO WINS: <strong><span id="AfterUOWins">@Model.AfterUOWins</span></strong></h2>
+                                @Html.HiddenFor(x => x.AfterUOWins)
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3">
+                            <div id="CurrentPointsLabel">
+                                <h2>CURRENT POINTS: <strong><span id="CurrentPoints">@Model.CurrentPoints</span></strong></h2>
+                            </div>
+                            <div id="AfterPointsLabel">
+                                <h2>CURRENT POINTS: <strong><span id="AfterPoints">@Model.AfterPoints</span></strong></h2>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+
+
+
+
+                @Html.HiddenFor(x => x.CurrentPoints)
+                @Html.HiddenFor(x => x.AfterPoints)
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <table style="width: 100%;" background="~/Content/Images/field2.png">
+                    <tr>
+                        <td style="height: 15px; border-bottom: none;">
+
+                        </td>
+                    </tr>
+                    <tr>
+                        @*<td style="width: 8%; border-top: none;" class="uoBox">
+                            <div id="uowinning">
+                                <h4 class="text-center">WINNING</h4>
+                            </div>
+                        </td>*@
+                        <td style="padding: 10px;" class="uoBox" valign="middle">
+                            <div class="col-lg-10 col-lg-offset-1" id="gbox" style="background: none; height:66px;width:0px;margin:6px;transition:none;"></div>
+                            <div style="display: table-cell; float: left; vertical-align: middle;">
+                                <img style="height: 66px;" src="@Url.Content("~/Content/Images/uo_logo_new.png")" alt="Oregon" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 105px;"></td>
+                    </tr>
+                    <tr>
+                        @*<td style="width: 8%;" class="ouBox">
+                            <h4 id="ouwinning" class="text-center">WINNING</h4>
+                        </td>*@
+                        <td style="padding: 10px;" class="ouBox" valign="middle">
+                            <div class="col-lg-10 col-lg-offset-1" id="box" style="background: none; height:66px;width:0px;margin:6px;transition:none;"></div>
+                            <div style="display: table-cell; float: left; vertical-align: middle;">
+                                <img style="height: 66px;" src="@Url.Content("~/Content/Images/osu_logo_new.png")" alt="Oregon State" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td style="height: 12px; border-bottom: none;"></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="height: 100px;">
+                <h1 class="text-center" id="ready">READY</h1>
+
+                <h1 class="text-center" id="set">SET</h1>
+
+                <h1 class="text-center" id="go">GO!</h1>
+                <h1 id="UOWon" class="text-center uoWon" style="width: 300px; margin: 0 auto;">
+                    UO WINS!
+                </h1>
+                <h1 id="OSUWon" class="text-center ouWon" style="width: 400px; margin: 0 auto;">
+                    OSU WINS!
+                </h1>
+            </td>
+        </tr>
+    </table>
+
+}
+
+
+
+
+

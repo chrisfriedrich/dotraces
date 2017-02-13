@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Dot Races</title>
+
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,600,600italic,400italic' rel='stylesheet' type='text/css'>
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script type="text/javascript">
+      $( function() {
+          $( "#slider" ).slider({
+              value: 4,
+              min: 1,
+              max: 7,
+              step: 1,
+              slide: function (event, ui) {
+                  $("#Answer_AnswerValue").val(ui.value);
+              }
+          });
+          $("#Answer_AnswerValue").val($("#slider").slider("value"));
+      });
+
+    </script>
+
+    @*<script type="text/javascript">
+                 $(document).ready(function () {
+                    $('#radio1').click(function () {
+                        $('#AnswerFlagTrue').hide('fast');
+                       //$('#div1').show('fast');
+                       $(":submit").removeAttr("disabled");
+                       $(":submit").addClass("btn-success");
+                });
+                $('#radio2').click(function () {
+                      //$('#div1').hide('fast');
+                      $('#AnswerFlagTrue').show('fast');
+                      $(":submit").removeAttr("disabled");
+                      $(":submit").addClass("btn-success");
+                 });
+                 });
+    </script>*@
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("input[name$='Answer.AnswerFlag']").on('click', function () {
+                var test = $(this).val();
+                if (test == "false") {
+                    $("#AnswerFlagTrue").hide(300);
+                }
+                else {
+                    $("#AnswerFlagTrue").show(300);
+                }
+                $(":submit").removeAttr("disabled");
+                $(":submit").addClass("btn-success");
+            });
+        });
+
+    </script>
+
+</head>
+<body>
+    @*<div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Application name", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                </ul>
+            </div>
+        </div>
+    </div>*@
+    <div class="container body-content">
+        @RenderBody()
+        @*<hr />
+        <footer>
+            <p class="text-center">&copy; @DateTime.Now.Year - Chris Friedrich</p>
+        </footer>*@
+    </div>
+</body>
+</html>

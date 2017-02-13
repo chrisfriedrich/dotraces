@@ -1,0 +1,38 @@
+﻿@model DotRaces.Models.Survey
+@{
+    ViewBag.Title = "Begin";
+}
+@using (Html.BeginForm("Begin", "Home"))
+{
+    @Html.HiddenFor(x => x.SurveyID)
+    @Html.HiddenFor(x => x.CreatedDate)
+    @Html.HiddenFor(x => x.SettingsID)
+
+    <table>
+        <tr>
+            <td>
+                <p class="lead">
+                    The races will begin when you hit the button below.&nbsp;
+                    The screen displayed for each of the first six races will feature the two icons and your point total.&nbsp;
+                    After the race is over, you will be automatically advanced to the next race.
+                </p>
+                <p class="lead">
+                    After the sixth race, you will be asked whether or not you want to bet your points on the final race.
+                </p>
+                <p class="lead">
+                    Upon making your choice, you will be asked a series of questions about how you are feeling.
+                </p>
+                <p class="lead">
+                    After that, you will be shown the final race.
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="text-center">
+                    <button type="submit" class="btn btn-default btn-success"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Begin</button>
+                </p>
+            </td>
+        </tr>
+    </table>
+}

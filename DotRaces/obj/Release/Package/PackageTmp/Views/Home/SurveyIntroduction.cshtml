@@ -1,0 +1,36 @@
+﻿@model DotRaces.Models.Survey
+@{
+    ViewBag.Title = "Survey Introduction";
+}
+
+@using (Html.BeginForm("SurveyIntroduction", "Home"))
+{
+    @Html.HiddenFor(x => x.SurveyID)
+    @Html.HiddenFor(x => x.CreatedDate)
+    @Html.HiddenFor(x => x.IdentityCode)
+    @Html.HiddenFor(x => x.PointTotal)
+    @Html.HiddenFor(x => x.SettingsID)
+    @Html.HiddenFor(x => x.UOWins)
+    @Html.HiddenFor(x => x.OSUWins)
+
+    <table style="margin: 0 auto;">
+        <tr>
+            <td>
+                <p class="lead">
+                    Before you watch the final race, we’d like to know you are feeling right now.
+                </p>
+                <p class="lead">
+                    You will be asked ten questions one at a time.
+                </p>
+                <br />
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <p class="text-center">
+                    <button type="submit" class="btn btn-default btn-success"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
+                </p>
+            </td>
+        </tr>
+    </table>
+}

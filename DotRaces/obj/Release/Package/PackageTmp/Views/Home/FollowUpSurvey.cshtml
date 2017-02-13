@@ -1,0 +1,128 @@
+﻿@model DotRaces.Models.QuestionViewModel
+@{
+    ViewBag.Title = "Follow-Up Survey";
+    Layout = "~/Views/Shared/_LayoutWide.cshtml";
+}
+
+
+
+@using (Html.BeginForm("FollowUpSurvey", "Home"))
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(x => x.SurveyID)
+    @Html.HiddenFor(x => x.QuestionNum)
+
+
+    for (int i = 0; i < Model.Questions.Count; i++)
+    {
+        @Html.HiddenFor(x => x.Questions[i].AskedFlag)
+        @Html.HiddenFor(x => x.Questions[i].CurrentQuestionFlag)
+        @Html.HiddenFor(x => x.Questions[i].HasFollowUp)
+        @Html.HiddenFor(x => x.Questions[i].FollowUpText)
+        @Html.HiddenFor(x => x.Questions[i].QuestionID)
+        @Html.HiddenFor(x => x.Questions[i].QuestionRoundNum)
+        @Html.HiddenFor(x => x.Questions[i].QuestionText)
+        @Html.HiddenFor(x => x.Questions[i].FeelingNoun)
+        @Html.HiddenFor(x => x.Questions[i].HighScaleDescription)
+        @Html.HiddenFor(x => x.Questions[i].LowScaleDescription)
+        @Html.HiddenFor(x => x.Questions[i].SettingSetID)
+    }
+    @Html.HiddenFor(x => x.Answer.AnswerID)
+    <table style="width: 100%;">
+        <tr>
+            <td colspan="2" style="vertical-align: middle;">
+                <br />
+                <h2 class="text-center">@Model.Questions[Model.QuestionNum].QuestionText</h2>
+            </td>
+        </tr>
+        <tr>
+            <td style="vertical-align: middle;">
+                <br /><br />
+                <h3 class="text-center">
+                    No&nbsp;&nbsp;&nbsp;@*<input type="radio" id="radio1" name="Answer.AnswerFlag" value="false" />*@@Html.RadioButtonFor(x => x.Answer.AnswerFlag, "false")&nbsp;&nbsp;&nbsp;
+                    @*<input type="radio" id="radio2" name="Answer.AnswerFlag" value="true" />*@
+                    Yes&nbsp;&nbsp;&nbsp;@Html.RadioButtonFor(x => x.Answer.AnswerFlag, "true")
+                </h3>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="height: 200px;">
+                @if (Model.Questions[Model.QuestionNum].HasFollowUp)
+                {
+                    <div id="AnswerFlagTrue" class="desc">
+                        <table style="width: 90%; margin: 0 auto;">
+                            <tr>
+                                <td>
+                                    <h3 style="margin-left: 40px;">@Model.Questions[Model.QuestionNum].FollowUpText</h3>
+                                    <br />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <table style="width: 100%; margin: 0 auto;" class="table table-bordered">
+                                        <tr>
+                                            <th style="width: 14.29%; text-align: center; font-size: .95em;">
+                                                @Model.Questions[Model.QuestionNum].LowScaleDescription @Model.Questions[Model.QuestionNum].FeelingNoun
+                                            </th>
+                                            <th style="width: 14.29%"></th>
+                                            <th style="width: 14.29%"></th>
+                                            <th style="width: 14.29%"></th>
+                                            <th style="width: 14.29%"></th>
+                                            <th style="width: 14.29%"></th>
+                                            <th style="width: 14.29%; text-align: center; font-size: .95em;">
+                                                @Model.Questions[Model.QuestionNum].HighScaleDescription @Model.Questions[Model.QuestionNum].FeelingNoun
+                                            </th>
+                                        </tr>
+                                        <tr>
+                                            <td style="text-align: center;">
+                                                <input type="radio" name="Answer.AnswerValue" value="1" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="radio" name="Answer.AnswerValue" value="2" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="radio" name="Answer.AnswerValue" value="3" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="radio" name="Answer.AnswerValue" value="4" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="radio" name="Answer.AnswerValue" value="5" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="radio" name="Answer.AnswerValue" value="6" />
+                                            </td>
+                                            <td style="text-align: center;">
+                                                <input type="radio" name="Answer.AnswerValue" value="7" />
+                                                @Html.HiddenFor(x => x.Answer.SurveyID)
+                                                @Html.HiddenFor(x => x.Answer.AnswerValue)
+                                                @Html.HiddenFor(x => x.Answer.QuestionID)
+                                                @Html.HiddenFor(x => x.Answer.QuestionRoundNum)
+                                            </td>
+                                            @*<td colspan="7">
+                                                <p>
+                                                    <div style="width: 90%; margin: 0 auto;" id="slider"></div>
+                                                    @Html.HiddenFor(x => x.Answer.SurveyID)
+                                                    @Html.HiddenFor(x => x.Answer.AnswerValue)
+                                                    @Html.HiddenFor(x => x.Answer.QuestionID)
+                                                </p>
+                                            </td>*@
+                                        </tr>
+                                    </table>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+                }
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <p class="text-center">
+                    <button type="submit" class="btn btn-default" disabled="disabled"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
+                </p>
+            </td>
+        </tr>
+    </table>
+}

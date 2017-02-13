@@ -1,0 +1,61 @@
+﻿@model DotRaces.Models.Survey
+@{
+    ViewBag.Title = "Bet";
+}
+<script type="text/javascript">
+
+        $(document).ready(function () {
+
+            $("input[name$='ChoseToBetFlag']").on('click', function () {
+                $(":submit").removeAttr("disabled");
+                $(":submit").addClass("btn-success");
+            });
+        });
+
+</script>
+@using (Html.BeginForm("Bet", "Home"))
+{
+    @Html.HiddenFor(x => x.SurveyID)
+    @Html.HiddenFor(x => x.CreatedDate)
+    @Html.HiddenFor(x => x.IdentityCode)
+    @Html.HiddenFor(x => x.PointTotal)
+    @Html.HiddenFor(x => x.SettingsID)
+    @Html.HiddenFor(x => x.UOWins)
+    @Html.HiddenFor(x => x.OSUWins)
+
+<p class="lead">
+    You have a total of @Model.PointTotal points.
+</p>
+<p class="lead">
+    By answering <strong>“YES”</strong> to the question below, you are agreeing to bet all your points on the last race.&nbsp;
+    If you win, your point total at the end of the game will be doubled.&nbsp;
+    If you lose, you will have 0 points.&nbsp;
+</p>
+<p class="lead">
+    By answering <strong>“NO”</strong> to the question below, you will receive 0 points on this race but you will retain your current point total at the end of the game.
+</p>
+<p class="lead text-center">
+    Please indicate your choice:
+
+<ul style="width: 400px; margin: 0 auto;">
+    <li style="list-style: none;">
+        @Html.RadioButtonFor(x => x.ChoseToBetFlag, "true") &nbsp;&nbsp; <span class="lead"><strong>Yes I want to take the bet.</strong></span>
+        <br /><br />
+    </li>
+    <li style="list-style: none;">
+        @Html.RadioButtonFor(x => x.ChoseToBetFlag, "false") &nbsp;&nbsp; <span class="lead"><strong>No, I don't want to take the bet.</strong></span>
+    </li>
+</ul>
+
+
+
+
+    @Html.ValidationMessageFor( x => x.ChoseToBetFlag, "", new { @class = "text-danger"})
+</p>
+    <br />
+    <p class="text-center">
+        <button type="submit" class="btn btn-default btn-sm" disabled="disabled"><span class="glyphicon glyphicon-share-alt"></span>&nbsp;&nbsp;Next</button>
+    </p>
+}
+
+
